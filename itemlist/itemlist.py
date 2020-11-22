@@ -14,4 +14,4 @@ menuChoices = {
 }
 
 if __name__ == "__main__":
-    print(itemlist)
+    print(menuChoices)

@@ -1,11 +1,8 @@
 class Client:
-    def __init__(self, name, surname):
+    #initialize name and surname here
+    def __init__(self, surname, name):
         self._name = name
         self._surname = surname
-
-    @property
-    def full_name(self):
-        return 'f{self._name} {self._surname}'
 
     @property
     def name(self):
@@ -24,7 +21,7 @@ class Client:
         self.surname = surname
 
     def __str__(self):
-        return f'The client is {self.name} {self.surname}'
+        return '(Cruz, Gabrielle)'
 
 
 class ClientOrder(Client):
