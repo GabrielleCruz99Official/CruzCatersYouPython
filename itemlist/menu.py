@@ -1,5 +1,4 @@
-import itemlist
-list = itemlist.menuChoices
+list = CruzCatersYouPython.menuChoices
 menu = []
 
 for key in list:
