@@ -4,7 +4,7 @@ class Client:
 
     Parameters
     ----------
-    
+
     """
     def __init__(self, name="", surname="", email="", contact_number=""):
         self._name = name
