@@ -1,4 +1,4 @@
-menu_idea_list = {
+menu_idea = {
     "BKK": {
         "name": "Beef Kare-Kare",
         "price": 12
@@ -17,7 +17,7 @@ menu_idea_list = {
     }
 }
 
-def add_item(item_id, item_name, item_price):
+def add_item(dish_id, dish_name, dish_price):
     """
     This method allows the user to add a new food item to
     the list of menu ideas
@@ -30,9 +30,9 @@ def add_item(item_id, item_name, item_price):
     Preconditions:
     - The length of item_id must be exactly 3
     """
-    menu_idea_list[item_id] = {"name": item_name, "price": item_price}
+    menu_idea[dish_id] = {"name": dish_name, "price": dish_price}
 
-def remove_item(item_id):
+def remove_item(dish_id):
     """
     This method allows the user to delete an existing food item
     to the list of menu ideas
@@ -43,15 +43,15 @@ def remove_item(item_id):
     Preconditions:
     - The length of item_id must be exactly 3
     """
-    del(menu_idea_list[item_id])
+    del(menu_idea[dish_id])
 
 def food_menu_to_list():
-    return [(food_item, food_info) for food_item, food_info in menu_idea_list.items()]
+    return [(food_item, food_info) for food_item, food_info in menu_idea.items()]
 
 if __name__ == "__main__":
     add_item("TST", "test", 10)
-    print(menu_idea_list)
+    print(menu_idea)
     remove_item("TST")
-    print(menu_idea_list)
+    print(menu_idea)
     test_list = food_menu_to_list()
     print(test_list)
