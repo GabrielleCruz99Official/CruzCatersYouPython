@@ -10,6 +10,10 @@ menu_idea_list = {
     "LCF": {
         "name": "Leche Flan",
         "price": 6
+    },
+    "CHS": {
+        "name": "Creamy Cheesecake",
+        "price": 15
     }
 }
 
@@ -41,8 +45,13 @@ def remove_item(item_id):
     """
     del(menu_idea_list[item_id])
 
+def food_menu_to_list():
+    return [(food_item, food_info) for food_item, food_info in menu_idea_list.items()]
+
 if __name__ == "__main__":
     add_item("TST", "test", 10)
     print(menu_idea_list)
     remove_item("TST")
     print(menu_idea_list)
+    test_list = food_menu_to_list()
+    print(test_list)
