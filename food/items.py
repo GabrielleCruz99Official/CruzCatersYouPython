@@ -51,7 +51,7 @@ def food_menu_to_list():
 if __name__ == "__main__":
     add_item("TST", "test", 10)
     print(menu_idea)
-    remove_item("TST")
-    print(menu_idea)
-    test_list = food_menu_to_list()
-    print(test_list)
+    #remove_item("TST")
+    #print(menu_idea)
+    #test_list = food_menu_to_list()
+    #print(test_list)
