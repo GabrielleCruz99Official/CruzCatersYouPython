@@ -39,8 +39,6 @@ def add_item(dish_id, dish_name, dish_price):
     """
     if dish_id not in menu_idea:
         menu_idea[dish_id] = {"name": dish_name, "price": dish_price}
-    else:
-        print("Item already exists!")
 
 
 def remove_item(dish_id):
@@ -56,8 +54,6 @@ def remove_item(dish_id):
     """
     if dish_id in menu_idea:
         del (menu_idea[dish_id])
-    else:
-        print("Item does not exist!")
 
 
 def food_idea_to_list():

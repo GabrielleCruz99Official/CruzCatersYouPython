@@ -1,3 +1,2 @@
-Test1, 12
-Test2, 10
-Test3, 8
+Beef Kare-Kare, 12
+Leche Flan, 6
