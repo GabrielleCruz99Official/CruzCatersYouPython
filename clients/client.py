@@ -37,14 +37,11 @@ class Client:
     def fullname(self):
         return f'{self.name} {self.surname}'
 
-    def __str__(self):
-        return '{} {}'.format(self.name, self.surname)
-
     """
     __repr__ is used to return a tuple of the class instance
     """
     def __repr__(self):
-        return 0
+        return '{} {}'.format(self.name, self.surname)
 
 
 
@@ -53,7 +50,10 @@ class ClientOrder(Client):
         self.order_list = order_list
         self.status = status
 
+client_list = []
+
+client_list.append(Client("Gabrielle", "Cruz", "test@gmail.com", "0487362360"))
+client_list.append(Client("Christian", "Cruz", "test2@gmail.com", "0471935165"))
 
 if __name__ == "__main__":
-    me = Client("Gabrielle", "Cruz")
-    print(me)
+    print(client_list)
