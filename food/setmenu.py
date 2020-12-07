@@ -36,8 +36,11 @@ def weekly_menu_to_list():
 
 
 if __name__ == "__main__":
-    week_menu = {"Test1": 12, "Test2": 10, "Test3": 8}
-    save_menu_file("weeklymenu.txt")
-    load_menu_file("weeklymenu.txt")
-    week_test_menu = weekly_menu_to_list()
-    print(week_test_menu)
+    try:
+        week_menu = {"Test1": 12, "Test2": 10, "Test3": 8}
+        save_menu_file("weeklymenu.txt")
+        load_menu_file("weeklymenu.txt")
+        week_test_menu = weekly_menu_to_list()
+        print(week_test_menu)
+    except Exception as e:
+        print(e)

@@ -61,6 +61,9 @@ def food_idea_to_list():
 
 
 if __name__ == "__main__":
-    load_dish_file("dishes.txt")
-    test_dish = food_idea_to_list()
-    save_dish_file("dishes.txt")
+    try:
+        load_dish_file("dishes.txt")
+        test_dish = food_idea_to_list()
+        save_dish_file("dishes.txt")
+    except Exception as e:
+        print(e)

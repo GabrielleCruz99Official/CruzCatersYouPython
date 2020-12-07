@@ -1,8 +1,4 @@
-from debug import *
-from clients import saveclient
 from food import menu
-from gui import *
-import re
 
 
 def load_main_menu():
@@ -24,4 +20,7 @@ def intro_message():
 
 
 if __name__ == "__main__":
-    load_main_menu()
+    try:
+        load_main_menu()
+    except Exception as e:
+        print(e)
