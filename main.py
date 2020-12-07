@@ -17,6 +17,8 @@ def intro_message():
     mode_select = input("Select mode:\n1: Menu\n2: Clients\n3: Orders\nType anything else to exit: ")
     if mode_select == "1":
         menu.display_interface()
+    if mode_select == "2":
+        pass
     else:
         print("Goodbye!")
 

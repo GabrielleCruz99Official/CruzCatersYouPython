@@ -44,7 +44,7 @@
       <w>120</w>
       <h>30</h>
     </coordinates>
-    <panel_attributes>Food Dish</panel_attributes>
+    <panel_attributes>Food Dishes</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -83,7 +83,7 @@ m2=1...n</panel_attributes>
       <h>210</h>
     </coordinates>
     <panel_attributes>A client orders a menu
-lt=&lt;&lt;&lt;&lt;-
+lt=&lt;&lt;-
 m1=1
 m2=1..n</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;190.0</additional_attributes>
@@ -99,7 +99,7 @@ m2=1..n</panel_attributes>
     <panel_attributes>A client's order contains
 only one menu every week
 lt=&lt;&lt;&lt;&lt;&lt;-
-m1=1
+m1=1..n
 m2=1</panel_attributes>
     <additional_attributes>10.0;20.0;290.0;20.0</additional_attributes>
   </element>

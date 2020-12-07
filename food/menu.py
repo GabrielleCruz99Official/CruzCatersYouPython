@@ -101,16 +101,17 @@ def display_dishes():
             print(dish_id, dish_name, dish_price)
             items.add_item(dish_id, dish_name, dish_price)
             print("Dish added to list!")
+            save_dish()
             display_dishes()
         elif action == "2":
             dish_id = input("Please input the 3-letter code of the dish you wish to remove: ")
             items.remove_item(dish_id)
             print("Dish removed!")
+            save_dish()
             display_dishes()
         else:
-            display_interface()
+            display_dishes()
     else:
-        save_dish()
         display_interface()
 
 
@@ -135,7 +136,7 @@ def display_set_menu():
                 continue_input = True
             else:
                 continue_input = False
-        save_menu()
+            save_menu()
         print("Menu saved!")
         display_interface()
     else:
