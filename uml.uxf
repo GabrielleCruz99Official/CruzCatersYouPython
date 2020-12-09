@@ -13,9 +13,10 @@
 --
 -name: String
 -surname: String
---
 -e-mail: String
--contact number: String</panel_attributes>
+-contact number: String
+--
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -28,11 +29,10 @@
     </coordinates>
     <panel_attributes>ClientOrder
 --
-+order_list: list
---
+-order_list: list
 -total_price: int
-+status: String
-
+-status: String
+--
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -53,10 +53,10 @@
       <x>860</x>
       <y>550</y>
       <w>100</w>
-      <h>60</h>
+      <h>40</h>
     </coordinates>
     <panel_attributes>Weekly Menu
-{name: price}</panel_attributes>
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -64,11 +64,10 @@
     <coordinates>
       <x>900</x>
       <y>380</y>
-      <w>170</w>
+      <w>90</w>
       <h>190</h>
     </coordinates>
-    <panel_attributes>A menu consists of one
-or more dishes
+    <panel_attributes>consists of
 lt=&lt;&lt;&lt;&lt;-
 m1=n
 m2=1...n</panel_attributes>
@@ -79,11 +78,11 @@ m2=1...n</panel_attributes>
     <coordinates>
       <x>510</x>
       <y>340</y>
-      <w>170</w>
+      <w>110</w>
       <h>210</h>
     </coordinates>
-    <panel_attributes>A client orders a menu
-lt=&lt;&lt;-
+    <panel_attributes>is ordered by
+lt=&lt;&lt;&lt;&lt;-
 m1=1
 m2=1..n</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;190.0</additional_attributes>
@@ -96,8 +95,7 @@ m2=1..n</panel_attributes>
       <w>310</w>
       <h>50</h>
     </coordinates>
-    <panel_attributes>A client's order contains
-only one menu every week
+    <panel_attributes>contains
 lt=&lt;&lt;&lt;&lt;&lt;-
 m1=1..n
 m2=1</panel_attributes>

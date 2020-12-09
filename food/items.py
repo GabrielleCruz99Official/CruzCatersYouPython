@@ -1,3 +1,5 @@
+from debug import exceptions as exc
+
 # set up empty dictionary
 menu_idea = {}
 
@@ -24,7 +26,7 @@ def save_dish_file(filename):
         print(e)
 
 
-def add_item(dish_id, dish_name, dish_price):
+def add_item(dish_id: str, dish_name: str, dish_price: int):
     """
     This method allows the user to add a new food item to
     the list of menu ideas
@@ -37,8 +39,11 @@ def add_item(dish_id, dish_name, dish_price):
     Preconditions:
     - The length of item_id must be exactly 3
     """
-    if dish_id not in menu_idea:
-        menu_idea[dish_id] = {"name": dish_name, "price": dish_price}
+    if len(dish_id) == 3:
+        if dish_id not in menu_idea:
+            menu_idea[dish_id] = {"name": dish_name, "price": dish_price}
+    else:
+        raise exc.IDError
 
 
 def remove_item(dish_id):

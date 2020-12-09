@@ -3,6 +3,20 @@ week_menu = {}
 
 
 def load_menu_file(filename):
+    """
+    This will load the menu of the week into the application
+
+    :param filename: file that contains menu of the week
+
+    Precondition
+    ------------
+    filename must exist
+
+    Postcondition
+    -------------
+    all menu dishes loaded in are stored in a temporary list
+    that the user can access while the application is running
+    """
     try:
         with open(filename, "r") as file:
             for line in file:

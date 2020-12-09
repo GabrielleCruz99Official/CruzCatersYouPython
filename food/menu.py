@@ -75,6 +75,9 @@ def load_menu_dishes():
 
 
 def display_interface():
+    """
+    Displays the main interface of menu and food ideas
+    """
     load_items()
     print("\n===================\nMENU AND FOOD IDEAS\n===================")
     load_menu_dishes()
@@ -85,10 +88,14 @@ def display_interface():
     if main_input == "2":
         display_dishes()
     else:
+        # returns to the main menu
         main.intro_message()
 
 
 def display_dishes():
+    """
+    Displays the dish section
+    """
     print("\n==========\nDISH IDEAS\n==========")
     load_dishes()
     change_dish = input("Would you like to edit the list of dishes?\nY/N - Input here: ")
@@ -116,13 +123,18 @@ def display_dishes():
 
 
 def display_set_menu():
+    """
+    Displays the set menu section
+    """
     print("=======\nSET MENU\n========")
     load_menu_dishes()
     change_menu = input("Are you sure you want to change the menu? ")
     if change_menu.lower() == "yes" or change_menu.lower() == "y":
         setmenu.clear_menu()
-        # import dictionary of dish ideas to make it easier to check
-        # if the input id exists
+        """
+        import dictionary of dish ideas to make it easier to check
+        if the input id exists
+        """
         food_ideas = items.menu_idea
         load_dishes()
         continue_input = True
@@ -131,6 +143,7 @@ def display_set_menu():
             if id_input in food_ideas:
                 name, price = food_ideas[id_input].values()
                 setmenu.add_menu_dish(name, price)
+            # prompt if you want to add more dishes to the menu
             add_more = input("Do you want to add more? ")
             if add_more.lower() == "yes" or add_more.lower() == "y":
                 continue_input = True
