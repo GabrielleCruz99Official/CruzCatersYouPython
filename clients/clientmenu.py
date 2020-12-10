@@ -3,14 +3,23 @@ import client as c
 
 def show_clients():
     """
-    This function
-    :return:
+    This function displays the clients using a generator
     """
     client_list = c.get_clients()
     for cl in client_list:
-        yield cl
+        yield cl.full_info().rstrip()
+
+
+def add_client(name: str, surname: str, email: str, contact: str):
+    c.client_list.append(c.Client(name, surname, email, contact))
 
 
 if __name__ == "__main__":
-    for client in show_clients():
-        print(client)
+    try:
+        c.load_clients("clientlist.txt")
+
+        for cli in show_clients():
+            print(cli)
+
+    except Exception as e:
+        print(e)

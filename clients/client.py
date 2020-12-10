@@ -43,14 +43,20 @@ class Client:
     def contact_number(self, contact_number):
         self.contact_number = contact_number
 
-    def info(self):
+    def full_name(self):
+        return f'{self.name} {self.surname}'
+
+    def contact_info(self):
         return f'{self.email}, {self.contact_number}'
 
-    """
-    __repr__ is used to return a tuple of the class instance
-    """
-    def __repr__(self):
+    def full_info(self):
+        return f'{self.full_name()}, {self.contact_info()}'
+
+    def __str__(self):
         return '{} {}'.format(self.name, self.surname)
+
+    def __del__(self):
+        pass
 
 
 def get_clients():
@@ -61,19 +67,27 @@ def get_clients():
     return client_list
 
 
-def load_clients(filename):
-    pass
+def load_clients(filename: str):
+    try:
+        with open(filename, "r") as file:
+            for line in file:
+                full_name, email, contact = line.split(", ")
+                name, surname = full_name.split(" ")
+                client_list.append(Client(name, surname, email, contact))
+    except Exception as e:
+        print(e)
 
 
-def save_clients(filename):
-    pass
-
-
-client_list.append(Client("Gabrielle", "Cruz", "test@gmail.com", "0487362360"))
-client_list.append(Client("Christian", "Cruz", "test2@gmail.com", "0471935165"))
+def save_clients(filename: str):
+    try:
+        with open(filename, "w") as file:
+            for client in client_list:
+                temp_str = f'{client.full_info()}'
+                file.writelines(f'{temp_str}\n')
+    except Exception as e:
+        print(e)
 
 
 if __name__ == "__main__":
-    client_list.append(Client("Gabrielle", "Cruz", "test@gmail.com", "0487362360"))
-    client_list.append(Client("Christian", "Cruz", "test2@gmail.com", "0471935165"))
+    load_clients("clientlist.txt")
     print(client_list)

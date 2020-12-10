@@ -1,35 +1,32 @@
 import client as c
+from food import setmenu as menu
+
+""" CLIENT ORDERS """
+client_orders = []
 
 
 class ClientOrder(c.Client):
-    def __init__(self, menu_order=[], subtotal=0, status="Wait"):
-        self._menu_order = menu_order
+    def __init__(self, name="", surname="", email="", contact_number = "", order_list=[], subtotal=0, status="WAIT"):
+        super().__init__(name, surname, email, contact_number)
+        self._order_list = order_list
         self._subtotal = subtotal
         self._status = status
 
-    @property
-    def menu_order(self):
-        return self._menu_order
-
-    @menu_order.setter
-    def menu_order(self, menu_order):
-        self.menu_order = menu_order
-
-    @property
-    def subtotal(self):
-        return self._subtotal
-
-    @subtotal.setter
-    def subtotal(self, subtotal):
-        self.subtotal = subtotal
-
-    @property
-    def status(self):
-        return self._status
-
-    @status.setter
-    def status(self, status):
-        self.status = status
+        
 
 
+""" LOADING AND SAVING ORDERS """
 
+
+def get_orders():
+    """
+    returns the list of clients in the database
+    :return: client_list: list
+    """
+    return client_orders
+
+
+if __name__ == "__main__":
+    test = c.Client("Test", "Toot")
+    test_order = ClientOrder(test)
+    print(test_order.full_name())
