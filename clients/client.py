@@ -43,14 +43,6 @@ class Client:
     def contact_number(self, contact_number):
         self.contact_number = contact_number
 
-    """
-    Added a method returning a full name method to return a 
-    string instance of the class so it can be written in a text file
-    
-    """
-    def fullname(self):
-        return f'{self.name} {self.surname}'
-
     def info(self):
         return f'{self.email}, {self.contact_number}'
 
@@ -67,6 +59,18 @@ def get_clients():
     :return: client_list: list
     """
     return client_list
+
+
+def load_clients(filename):
+    pass
+
+
+def save_clients(filename):
+    pass
+
+
+client_list.append(Client("Gabrielle", "Cruz", "test@gmail.com", "0487362360"))
+client_list.append(Client("Christian", "Cruz", "test2@gmail.com", "0471935165"))
 
 
 if __name__ == "__main__":

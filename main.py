@@ -4,7 +4,7 @@ import tkinter as tk
 import sys
 
 
-"""LOADING MESSAGES"""
+"""CONSOLE MESSAGES"""
 
 
 def load_main_menu():
