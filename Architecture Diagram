@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-12-11T14:23:32.523Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="TiP9yu6XtQh9Az6GFYao" version="14.0.1" type="github">
+<mxfile host="app.diagrams.net" modified="2020-12-11T14:25:03.978Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="mw7j5Av5d5p_JP4rcbEW" version="14.0.1" type="github">
   <diagram id="lrrh991XSt2kbmvS_W98" name="Page-1">
     <mxGraphModel dx="1038" dy="548" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -51,6 +51,9 @@
         </mxCell>
         <mxCell id="7S4QKEaa6QJRWRNv0K-F-15" value="User" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="97.5" y="280" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7S4QKEaa6QJRWRNv0K-F-16" value="&lt;b&gt;&lt;font style=&quot;font-size: 24px&quot;&gt;CRUZCATERSYOU&lt;br&gt;APPLICATION&lt;br&gt;&lt;font&gt;ARCHITECTURE DIAGRAM&lt;/font&gt;&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="228" y="50" width="395" height="100" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
