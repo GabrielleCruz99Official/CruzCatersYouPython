@@ -83,7 +83,7 @@ def save_clients(filename: str):
         with open(filename, "w") as file:
             for client in client_list:
                 temp_str = f'{client.full_info()}'
-                file.writelines(f'{temp_str}\n')
+                file.writelines(f'{temp_str.rstrip()}\n')
     except Exception as e:
         print(e)
 

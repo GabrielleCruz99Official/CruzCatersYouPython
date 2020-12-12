@@ -1,5 +1,5 @@
 from clients import client as c
-from clientmenu import add_client
+from clients import clientmenu as cm
 from food import setmenu as smenu
 from food import menu
 from random import randint as rand
@@ -12,12 +12,11 @@ client_orders = []
 
 
 class ClientOrder(c.Client):
-    def __init__(self, name="", surname="", email="", contact_number="", order_list=[], subtotal=0, order_id="", status="WAIT"):
+    def __init__(self, name="", surname="", email="", contact_number="", order_list=[], subtotal=0, order_id=""):
         super().__init__(name, surname, email, contact_number)
         self._order_list = order_list
         self._subtotal = subtotal
         self._order_id = order_id
-        self._status = status
 
     @property
     def order_list(self):
@@ -36,14 +35,6 @@ class ClientOrder(c.Client):
         self.subtotal = subtotal
 
     @property
-    def status(self):
-        return self._status
-
-    @status.setter
-    def status(self, status):
-        self.status = status
-
-    @property
     def order_id(self):
         return self._order_id
 
@@ -51,11 +42,39 @@ class ClientOrder(c.Client):
     def order_id(self, order_id):
         self.order_id = order_id
 
-    def get_order(self):
-        return self.order_list
 
-    def get_status(self):
-        return self.status
+""" ORDER FUNCTIONS """
+
+
+def add_order(name, surname, email, contact, order_list, subtotal, order_id):
+    client_orders.append(ClientOrder(name, surname, email, contact, order_list, subtotal, order_id))
+
+
+def view_order():
+    pick_order = input("What order do you want to view?\n Format(name, surname, subtotal): ")
+    name, surname, subtotal = pick_order.split(", ")
+    temp_order = [o for o in client_orders if o.name == name and o.surname == surname and o.subtotal == subtotal]
+    for order in temp_order:
+        print(order.full_name(), order.subtotal)
+
+
+def remove_order(order_id):
+    filter(lambda x: x.order_id != order_id, client_orders)
+
+
+def display_orders():
+    order_list = get_orders()
+    for order in order_list:
+        yield order.full_name(), order.order_list, order.subtotal
+
+
+def random_id():
+    return rand(100000, 999999)
+
+
+def check_client(name, surname, email, contact):
+    if len([x for x in c.get_clients() if x.name == name and x.surname == surname]) == 0:
+        cm.add_client(name, surname, email, contact)
 
 
 """ LOADING AND SAVING ORDERS """
@@ -63,7 +82,17 @@ class ClientOrder(c.Client):
 
 def load_order_file(filename: str):
     try:
-        pass
+        with open(filename, "r") as file:
+            for line in file:
+                order_start = line.find("[")
+                order_end = line.find("]") + 1
+                order_list = line[order_start:order_end]
+                # added 2 to the index of order_end to skip
+                # whitespace and comma
+                rest = line[:order_start] + line[order_end + 2:]
+                full_name, email, contact, subtotal, order_id = rest.rstrip().split(", ")
+                name, surname = full_name.split(" ")
+                add_order(name, surname, email, contact, order_list, subtotal, order_id)
     except Exception as e:
         print(e)
 
@@ -72,7 +101,8 @@ def save_order_file(filename: str):
     try:
         with open(filename, "w") as file:
             for order in client_orders:
-                temp_str = f'{order.full_info}, {order.order_list}, {order.subtotal}'
+                temp_str = f'{order.full_info()}, {order.order_list}, {order.subtotal}, {order.order_id}\n'
+                file.writelines(temp_str)
     except Exception as e:
         print(e)
 
@@ -85,38 +115,13 @@ def get_orders():
     return client_orders
 
 
-""" ORDER FUNCTIONS """
+def load_orders():
+    client_orders = []
+    load_order_file("clientorders.txt")
 
 
-def add_order(name, surname, email, contact, order_list, subtotal, order_id):
-    client_orders.append(ClientOrder(name, surname, email, contact, order_list, subtotal, order_id))
-
-
-def view_order():
-    pick_order = input("What order do you want to view?\n Format(surname, name, subtotal): ")
-    surname, name, subtotal = pick_order.split(", ")
-    temp_order = [o for o in get_orders() if o.surname == surname and o.name == name and o.subtotal == subtotal]
-    for order in temp_order:
-        print(order.full_name, order.order_list, order.subtotal, order.status)
-
-
-def remove_order(order_id):
-    filter(lambda x: x.order_id != order_id, client_orders)
-
-
-def display_orders():
-    order_list = get_orders()
-    for order in order_list:
-        yield order.full_name, order.subtotal
-
-
-def random_id():
-    return rand(100000, 999999)
-
-
-def check_client(name, surname, email, contact):
-    if len([x for x in c.get_clients() if x.name == name and x.surname == surname]) == 0:
-        add_client(name, surname, email, contact)
+def save_orders():
+    save_order_file("clientorders.txt")
 
 
 """ CONSOLE MESSAGES """
@@ -126,6 +131,7 @@ def display_orders_interface():
     """
     Displays the orders section
     """
+    load_orders()
     print("======\nORDERS\n======")
     for order in display_orders():
         print(order)
@@ -146,6 +152,7 @@ def display_orders_interface():
     elif ui_choice == "2" or ui_choice.lower() == "add":
         print("====\nMENU\n====")
         menu.load_menu()
+        menu.load_menu_dishes()
         week_menu = smenu.weekly_menu_to_list()
         print("============")
         client = input("Input contact details in this format\n(Name, Surname, Email, Contact Number): ")
@@ -157,14 +164,13 @@ def display_orders_interface():
             if search("[^0-9]", new_order):
                 print("You didn't put an integer.")
                 display_orders_interface()
-                subtotal += lambda x: dish[-1] * int(new_order)
-            order.append(tuple(list(dish), new_order))
+            temp_list = list(dish)
+            subtotal += int(dish[-1]) * int(new_order)
+            temp_list.append(new_order)
+            order.append(tuple(temp_list))
         add_order(name, surname, email, contact, order, subtotal, random_id())
+        save_orders()
         print("Order confirmed!")
-
-
-
-
         display_orders_interface()
     else:
         main.intro_message()
@@ -172,7 +178,6 @@ def display_orders_interface():
 
 if __name__ == "__main__":
     try:
-
         display_orders_interface()
     except Exception as e:
         print(e)

@@ -27,18 +27,19 @@ def add_client(name: str, surname: str, email: str, contact: str):
 
 
 def remove_client(name: str, surname: str):
-    filter(lambda x: x.name != name and x.surname != surname, c.client_list)
+    c.client_list = [x for x in c.client_list if x.name != name and x.surname != surname]
 
 
 """ CONSOLE MESSAGES """
 
 
 def display_clients_interface():
+    c.client_list = []
+    load_client_list()
     print("""=======\nCLIENTS\n=======""")
     client_option = input("1: View Clients\n2: Add Client\n3: Remove Client\nType anything else to return: ")
     if search("[0-9]", client_option):
         if client_option == "1":
-            load_client_list()
             for cl in show_clients():
                 print(cl)
         if client_option == "2":
