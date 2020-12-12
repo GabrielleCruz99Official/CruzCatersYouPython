@@ -25,7 +25,7 @@
       <x>460</x>
       <y>530</y>
       <w>120</w>
-      <h>90</h>
+      <h>120</h>
     </coordinates>
     <panel_attributes>ClientOrder
 --
@@ -33,7 +33,8 @@
 -total_price: int
 -status: String
 --
-</panel_attributes>
++get_order()
++get_status()</panel_attributes>
     <additional_attributes/>
   </element>
   <element>

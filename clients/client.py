@@ -62,7 +62,7 @@ class Client:
 def get_clients():
     """
     returns the list of clients in the database
-    :return: client_list: list
+    :return: client_list
     """
     return client_list
 

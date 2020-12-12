@@ -1,5 +1,7 @@
 from food import menu
 from debug import exceptions as exc
+from clients import clientmenu as cl
+from clients import clientorders as ord
 import tkinter as tk
 import sys
 
@@ -20,15 +22,15 @@ def intro_message():
     """
     print("\n=============\nCRUZCATERSYOU\n=============")
     mode_select = input("Select mode:\n1: Menu\n2: Clients\n3: Orders\nType anything else to exit: ")
-    if mode_select == "1":
+    if mode_select == "1" or mode_select.lower() == "menu":
         # this displays the menu and dishes interface
-        menu.display_interface()
-    if mode_select == "2":
+        menu.display_menu_interface()
+    if mode_select == "2" or mode_select.lower() == "client":
         # this displays the client interface
-        pass
-    if mode_select == "3":
+        cl.display_clients_interface()
+    if mode_select == "3" or mode_select.lower() == "order":
         # this displays the orders interface
-        pass
+        ord.display_orders_interface()
     else:
         print("Goodbye!")
         # inserted the line below to stop the intro message from displaying twice
@@ -37,7 +39,7 @@ def intro_message():
 
 """GUI"""
 
-"""
+
 class App(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
@@ -49,6 +51,7 @@ class App(tk.Frame):
         # main menu label
         self.title_card = tk.Label(self, text="============\nCRUZCATERSYOU\n============")
         self.title_card.pack(side="top")
+
         # menu button
         self.menu = tk.Button(self)
         self.menu["text"] = "Menu"
@@ -72,15 +75,16 @@ class App(tk.Frame):
         self.quit.pack(side="bottom")
 
     def load_menu(self):
-        menu.display_interface()
+        menu.display_menu_interface()
 
     def load_clients(self):
-        pass
+        cl.display_clients_interface()
 
     def load_orders(self):
-        pass
+        ord.display_orders_interface()
 
 
+"""
 ====limit 2====
 app = Tk()
 app.title("CRUZCATERSYOU")
@@ -102,12 +106,10 @@ ttk.Button(main_menu, text="Orders").grid(column=3, row=3, sticky=E)
 if __name__ == "__main__":
     try:
         load_main_menu()
-        """
-        window = tk.Tk()
+        """window = tk.Tk()
         window.title("CRUZCATERSYOU")
         test = App(master=window)
-        window.mainloop()
-        """
+        window.mainloop()"""
     except Exception as e:
         print(e)
     except exc.IDError as idE:

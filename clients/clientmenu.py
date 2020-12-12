@@ -1,4 +1,7 @@
-import client as c
+from clients import client as c
+
+
+""" LOADING CLIENTS """
 
 
 def show_clients():
@@ -12,6 +15,13 @@ def show_clients():
 
 def add_client(name: str, surname: str, email: str, contact: str):
     c.client_list.append(c.Client(name, surname, email, contact))
+
+
+""" CONSOLE MESSAGES """
+
+
+def display_clients_interface():
+    pass
 
 
 if __name__ == "__main__":

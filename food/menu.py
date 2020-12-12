@@ -74,7 +74,7 @@ def load_menu_dishes():
 """CONSOLE INTERFACE SECTION"""
 
 
-def display_interface():
+def display_menu_interface():
     """
     Displays the main interface of menu and food ideas
     """
@@ -83,9 +83,9 @@ def display_interface():
     load_menu_dishes()
     print("===================\n1: Set/Change Menu\n2: Display Dishes")
     main_input = input("What do you want to do? ")
-    if main_input == "1":
+    if main_input == "1" or main_input.lower() == "menu":
         display_set_menu()
-    if main_input == "2":
+    if main_input == "2" or main_input.lower() == "display":
         display_dishes()
     else:
         # returns to the main menu
@@ -119,7 +119,7 @@ def display_dishes():
         else:
             display_dishes()
     else:
-        display_interface()
+        display_menu_interface()
 
 
 def display_set_menu():
@@ -145,20 +145,18 @@ def display_set_menu():
                 setmenu.add_menu_dish(name, price)
             # prompt if you want to add more dishes to the menu
             add_more = input("Do you want to add more? ")
-            if add_more.lower() == "yes" or add_more.lower() == "y":
-                continue_input = True
-            else:
+            if add_more.lower() == "no" or add_more.lower() == "n":
                 continue_input = False
             save_menu()
         print("Menu saved!")
-        display_interface()
+        display_menu_interface()
     else:
-        display_interface()
+        display_menu_interface()
 
 
 if __name__ == "__main__":
     try:
-        display_interface()
+        display_menu_interface()
 
     except Exception as e:
         print(e)
