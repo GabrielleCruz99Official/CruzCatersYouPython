@@ -27,7 +27,7 @@ def add_client(name: str, surname: str, email: str, contact: str):
 
 
 def remove_client(name: str, surname: str):
-    c.client_list = [x for x in c.get_clients() if x.name != name and x.surname != surname]
+    filter(lambda x: x.name != name and x.surname != surname, c.client_list)
 
 
 """ CONSOLE MESSAGES """
