@@ -1,6 +1,8 @@
 from clients import client as c
-from food import setmenu as menu
+from food import setmenu as smenu
+from food import menu
 import main
+
 from re import search
 
 """ CLIENT ORDERS """
@@ -83,7 +85,6 @@ def display_orders_interface():
     print("======\nORDERS\n======")
     for order in display_orders():
         print(order)
-    print("================\n")
     ui_choice = input("What do you want to do?\n1: View Order\n2: Add New Order\nType anything else to return: ")
     if ui_choice == "1" or ui_choice.lower() == "view":
         try:
@@ -100,8 +101,9 @@ def display_orders_interface():
             display_orders_interface()
     elif ui_choice == "2" or ui_choice.lower() == "add":
         print("================\nMENU OF THE WEEK\n================")
-        for dish in menu.weekly_menu_to_list():
-            print(dish)
+        menu.load_menu()
+        menu.load_menu_dishes()
+
         display_orders_interface()
     else:
         main.intro_message()
