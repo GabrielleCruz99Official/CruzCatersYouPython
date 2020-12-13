@@ -40,7 +40,15 @@ def intro_message():
 """GUI"""
 
 
-class App(tk.Frame):
+def load_main_gui():
+    window = tk.Tk()
+    window.title("CRUZCATERSYOU")
+    window.geometry("200x150")
+    main = MainMenu(master=window)
+    window.mainloop()
+
+
+class MainMenu(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master
@@ -53,21 +61,21 @@ class App(tk.Frame):
         self.title_card.pack(side="top")
 
         # menu button
-        self.menu = tk.Button(self)
-        self.menu["text"] = "Menu"
-        self.menu["command"] = self.load_menu
+        self.menu = tk.Button(self, text="Menu")
+        self.menu.bind("<Button>", lambda e: Menu(self))
+        # self.menu["command"] = self.load_menu
         self.menu.pack()
 
         # clients button
         self.clients = tk.Button(self)
         self.clients["text"] = "Clients"
-        self.clients["command"] = self.load_clients
+        # self.clients["command"] = self.load_clients
         self.clients.pack()
 
         # orders button
         self.orders = tk.Button(self)
         self.orders["text"] = "Orders"
-        self.orders["command"] = self.load_orders
+        # self.orders["command"] = self.load_orders
         self.orders.pack()
 
         # quit button
@@ -84,32 +92,31 @@ class App(tk.Frame):
         ord.display_orders_interface()
 
 
-"""
-====limit 2====
-app = Tk()
-app.title("CRUZCATERSYOU")
+class Menu(tk.Toplevel):
+    def __init__(self, master=None):
+        super().__init__(master=master)
+        self.title("Menu")
+        self.geometry("450x450")
+        self.label_text = tk.Label(self, text="===================\nMENU AND FOOD IDEAS\n===================")
+        self.label_text.pack()
 
-main_menu = ttk.Frame(app, padding="3 3 12 12")
-main_menu.grid(column=0, row=0, sticky=(N, W, E, S))
-app.columnconfigure(0, weight=1)
-app.rowconfigure(0, weight=1)
-
-ttk.Label(main_menu, text="============\nCRUZCATERSYOU\n============").grid(column=2, row=1, sticky=N)
-
-ttk.Button(main_menu, text="Menu", command=load_dish_menu).grid(column=1, row=3, sticky=W)
-ttk.Button(main_menu, text="Clients").grid(column=2, row=3, sticky=S)
-ttk.Button(main_menu, text="Orders").grid(column=3, row=3, sticky=E)
+        self.back = tk.Button(self, text="Return")
+        self.back["command"] = self.withdraw()
+        self.back.pack()
 
 
-"""
+class Clients(tk.Toplevel):
+    pass
+
+
+class Orders(tk.Toplevel):
+    pass
+
 
 if __name__ == "__main__":
     try:
-        load_main_menu()
-        """window = tk.Tk()
-        window.title("CRUZCATERSYOU")
-        test = App(master=window)
-        window.mainloop()"""
+        # load_main_menu()
+        load_main_gui()
     except Exception as e:
         print(e)
     except exc.IDError as idE:
