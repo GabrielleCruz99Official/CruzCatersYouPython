@@ -106,7 +106,7 @@ class Menu(tk.Toplevel):
         super().__init__(master)
         self.master = master
         self.title("Menu")
-        self.geometry("450x450")
+        self.geometry("500x450")
         self.create_widgets()
 
     def create_widgets(self):
@@ -116,10 +116,10 @@ class Menu(tk.Toplevel):
         self.menu_label = tk.Label(self.title_frame, text="========\nMENU AND FOOD IDEAS\n========")
         self.menu_label.pack()
         self.week_menu = tk.Listbox(self.title_frame, width=0, height=0)
-        wm = sm.weekly_menu_to_list()
-        for menu_dish in wm:
-            self.week_menu.insert(wm.index(menu_dish), f'{menu_dish[0]}: {menu_dish[-1]}')
         self.week_menu.pack()
+        self.display_menu = tk.Button(self.title_frame, text="Display Menu", fg="orange")
+        self.display_menu.bind("<Button>", self.update_menu())
+        self.display_menu.pack()
 
         """DISHES FRAME"""
         self.dish_frame = tk.Frame(self, borderwidth=2, relief='ridge')
@@ -134,11 +134,15 @@ class Menu(tk.Toplevel):
         self.display_dishes.bind("<Button>", self.update_dishes())
         self.display_dishes.pack()
 
+        """FRAME FOR ADD/REMOVE DISHES"""
+        self.change_idea_frame = tk.Frame(self.dish_frame, borderwidth=2, relief='ridge')
+        self.change_idea_frame.pack()
+
         """FRAME FOR ADDING NEW DISHES"""
-        self.add_dish_frame = tk.Frame(self.dish_frame, borderwidth=1, relief='ridge')
+        self.add_dish_frame = tk.Frame(self.change_idea_frame, borderwidth=1, relief='ridge')
         self.add_dish_frame.pack(side="left")
         self.add_dish_frame_label = tk.Label(self.add_dish_frame, text="Add new dish?")
-        self.add_dish_frame_label.pack(side="top")
+        self.add_dish_frame_label.pack()
         self.add_id_label = tk.Label(self.add_dish_frame, text="Dish ID")
         self.add_id_label.pack()
         self.add_id = tk.Entry(self.add_dish_frame)
@@ -156,10 +160,10 @@ class Menu(tk.Toplevel):
         self.add_new_dish.pack()
 
         """FRAME TO REMOVE EXISTING DISH"""
-        self.remove_dish_frame = tk.Frame(self.dish_frame, borderwidth=1, relief='ridge')
+        self.remove_dish_frame = tk.Frame(self.change_idea_frame, borderwidth=1, relief='ridge')
         self.remove_dish_frame.pack(side="left")
         self.remove_dish_frame_label = tk.Label(self.remove_dish_frame, text="Remove a dish?")
-        self.remove_dish_frame_label.pack(side="top")
+        self.remove_dish_frame_label.pack()
         self.remove_id_label = tk.Label(self.remove_dish_frame, text="Dish ID")
         self.remove_id_label.pack()
         self.remove_id = tk.Entry(self.remove_dish_frame)
@@ -168,8 +172,20 @@ class Menu(tk.Toplevel):
         self.remove_new_dish.bind("<Button>", self.remove_dish)
         self.remove_new_dish.pack()
 
+        """SET MENU"""
+        self.set_menu_frame = tk.Frame(self, borderwidth=2, relief='ridge')
+        self.set_menu_frame.pack(side="right")
+        self.menu_ideas = tk.Frame(self.set_menu_frame, borderwidth=1, relief='ridge')
+        self.menu_ideas.pack()
+        self.dish_ideas = Checkbar(self.menu_ideas)
+        self.dish_ideas.pack()
+        self.new_menu = tk.Button(self.set_menu_frame, text="Confirm New Menu")
+        self.new_menu.bind("<Button>", self.set_menu)
+        self.new_menu.pack()
+
+
         """RETURN TO MAIN MENU"""
-        self.menu_back = tk.Button(self, text="Return", fg="red")
+        self.menu_back = tk.Button(self, text="Return", fg="red", width=0, height=0)
         self.menu_back.bind('<Button>', self.go_back)
         self.menu_back.pack(side="bottom")
 
@@ -180,6 +196,23 @@ class Menu(tk.Toplevel):
     def remove_dish(self, event):
         it.remove_item(self.remove_id.get())
         self.update_dishes()
+
+    def set_menu(self, event):
+        toggle = list(self.dish_ideas.selected())
+        sm.clear_menu()
+        dish_ideas = it.food_idea_to_list()
+        for dish in dish_ideas:
+            index = dish_ideas.index(dish)
+            if toggle[index] == 1:
+                sm.add_menu_dish(dish[1]['name'], dish[1]['price'])
+        self.update_menu()
+
+
+    def update_menu(self):
+        self.week_menu.delete(0, tk.END)
+        wm = sm.weekly_menu_to_list()
+        for menu_dish in wm:
+            self.week_menu.insert(wm.index(menu_dish), f'{menu_dish[0]}: {menu_dish[1]}')
 
     def update_dishes(self):
         self.dish_box.delete(0, tk.END)
@@ -192,6 +225,25 @@ class Menu(tk.Toplevel):
         m.save_menu()
         self.withdraw()
         print("Back to main menu.")
+
+
+class Checkbar(tk.Frame):
+    def __init__(self, master=None, side="top"):
+        super().__init__(master)
+        self.master = master
+        self.text = tk.Label(self, text="-New Menu-")
+        self.text.pack()
+        self.vars = []
+        self.dishes = it.food_idea_to_list()
+        for dish in self.dishes:
+            var = tk.IntVar()
+            chk = tk.Checkbutton(self, text='{}: {}'.format(dish[1]['name'], dish[1]['price']), variable=var)
+            chk.pack(side=side)
+            self.vars.append(var)
+
+    def selected(self):
+        return map((lambda var: var.get()), self.vars)
+
 
 class Clients(tk.Toplevel):
     def __init__(self, master=None):
