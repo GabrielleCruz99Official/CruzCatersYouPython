@@ -57,8 +57,8 @@ def view_order():
         print(order.full_name(), order.order_list, order.subtotal)
 
 
-def remove_order(order_id):
-    filter(lambda x: x.order_id != order_id, client_orders)
+def clear_orders():
+    client_orders.clear()
 
 
 def display_orders():
@@ -68,6 +68,10 @@ def display_orders():
 
 
 def random_id():
+    """
+    This is the random id generator for each new order
+    :return: a random integer between 100000 and 999999
+    """
     return rand(100000, 999999)
 
 

@@ -2,6 +2,7 @@ import tkinter as tk
 from clients import client as c
 from clients import clientmenu as cm
 
+
 class Clients(tk.Toplevel):
     def __init__(self, master=None):
         super().__init__(master)
@@ -32,7 +33,7 @@ class Clients(tk.Toplevel):
 
         """ADD/REMOVE CLIENTS FRAME"""
         self.change_client_list = tk.Frame(self, borderwidth=2, relief='ridge')
-        self.change_client_list.pack()
+        self.change_client_list.pack(side="top")
         self.change_client_label = tk.Label(self.change_client_list, text="-Add or Remove a Client-")
         self.change_client_label.pack(side="top")
 
@@ -121,9 +122,9 @@ class Clients(tk.Toplevel):
 
 class Radiobar(tk.Frame):
     """
-    The Radiobar frame puts the dish ideas into
-    a checkbox list, allowing us to pick which
-    dishes we want to serve this week.
+    The Radiobar frame puts the clients into
+    a radio button list, allowing us to view
+    each client's information
     """
     def __init__(self, master=None, side="top"):
         super().__init__(master)

@@ -1,2 +1,1 @@
-G C, asd, 123, [('Beef Kare-Kare', '12', '1'), ('Chicken Pasta Salad', '6', '1'), ('Spaghetti Bolognaise', '8', '1')], 26, 516976
-D C, haha@gmail.com, 022231456, [('Leche Flan', '6', '2'), ('Creamy Cheesecake', '15', '4'), ('Spaghetti Bolognaise', '12', '1')], 84, 327257
+Gabe Cruz, thexourz@gmail.com, 0487362360, [('Beef Kare-Kare', '12', '1'), ('Chicken Pasta Salad', '6', '2')], 24, 976885
