@@ -1,8 +1,8 @@
-from food import menu as m
 from gui import maingui as app
 from debug import exceptions as exc
+from food import menu as m
 from clients import clientmenu as cl
-from clients import clientorders as ord
+from clients import clientorders as o
 import tkinter as tk
 import sys
 
@@ -31,7 +31,7 @@ def intro_message():
         cl.display_clients_interface()
     if mode_select == "3" or mode_select.lower() == "order":
         # this displays the orders interface
-        ord.display_orders_interface()
+        o.display_orders_interface()
     else:
         print("Goodbye!")
         # inserted the line below to stop the intro message from displaying twice
@@ -39,6 +39,7 @@ def intro_message():
 
 
 """ GRAPHICAL USER INTERFACE """
+
 
 # settings for the application's main window
 def load_main_gui():

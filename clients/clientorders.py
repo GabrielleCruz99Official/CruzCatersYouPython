@@ -12,7 +12,7 @@ client_orders = []
 
 
 class ClientOrder(c.Client):
-    def __init__(self, name="", surname="", email="", contact_number="", order_list=[], subtotal=0, order_id=""):
+    def __init__(self, name="", surname="", email="", contact_number="", order_list=[], subtotal=0, order_id=0):
         super().__init__(name, surname, email, contact_number)
         self._order_list = order_list
         self._subtotal = subtotal
@@ -51,11 +51,10 @@ def add_order(name, surname, email, contact, order_list, subtotal, order_id):
 
 
 def view_order():
-    pick_order = input("What order do you want to view?\n Format(name, surname, subtotal): ")
-    name, surname, subtotal = pick_order.split(", ")
-    temp_order = [o for o in client_orders if o.name == name and o.surname == surname and o.subtotal == subtotal]
+    pick_order = input("What order do you want to view?\n ID: ")
+    temp_order = [o for o in client_orders if o.order_id == pick_order]
     for order in temp_order:
-        print(order.full_name(), order.subtotal)
+        print(order.full_name(), order.order_list, order.subtotal)
 
 
 def remove_order(order_id):
@@ -65,7 +64,7 @@ def remove_order(order_id):
 def display_orders():
     order_list = get_orders()
     for order in order_list:
-        yield order.full_name(), order.order_list, order.subtotal
+        yield order.full_name(), order.order_list, order.subtotal, order.order_id
 
 
 def random_id():

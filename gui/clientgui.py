@@ -1,5 +1,6 @@
 import tkinter as tk
 from clients import client as c
+from clients import clientmenu as cm
 
 class Clients(tk.Toplevel):
     def __init__(self, master=None):
@@ -63,7 +64,7 @@ class Clients(tk.Toplevel):
         self.add_client_contact.pack()
 
         self.add_client_confirm = tk.Button(self.add_client, text="Confirm")
-        self.add_client_confirm.bind("<Button>", self.add_client)
+        self.add_client_confirm.bind("<Button>", self.add_new_client)
         self.add_client_confirm.pack(side="bottom")
 
         """REMOVE CLIENTS"""
@@ -85,7 +86,7 @@ class Clients(tk.Toplevel):
         self.remove_client_surname.pack()
 
         self.remove_client_confirm = tk.Button(self.remove_client, text="Confirm")
-        self.remove_client_confirm.bind("<Button>", self.remove_client)
+        self.remove_client_confirm.bind("<Button>", self.remove_old_client)
         self.remove_client_confirm.pack(side="bottom")
 
         """RETURN TO MAIN MENU"""
@@ -105,11 +106,13 @@ class Clients(tk.Toplevel):
         self.client_info.insert(1, temp_text_2)
         self.client_info.insert(2, temp_text_3)
 
-    def add_client(self):
-        pass
+    def add_new_client(self, event):
+        cm.add_client(self.add_client_name.get(), self.add_client_surname.get(), self.add_client_email.get(), self.add_client_contact.get())
 
-    def remove_client(self):
-        pass
+    def remove_old_client(self, event):
+        name = self.remove_client_name.get()
+        surname = self.remove_client_surname.get()
+        cm.remove_client(name, surname)
 
     def go_back(self, event):
         print("Back to main menu.")
