@@ -117,6 +117,7 @@ class Clients(tk.Toplevel):
 
     def go_back(self, event):
         print("Back to main menu.")
+        cm.save_client_list()
         self.withdraw()
 
 

@@ -121,6 +121,7 @@ class Orders(tk.Toplevel):
 
     def go_back(self, event):
         print("Back to main menu.")
+        o.save_orders()
         self.withdraw()
 
 
@@ -158,10 +159,8 @@ class OrderRadio(tk.Frame):
         self.vars = []
         self.var = tk.StringVar()
         for order in self.orders:
-            tk.Radiobutton(self, indicatoron=0, text=f"{order.order_id}", variable=self.var,
-                           value=order.order_id, command=self.view_info).pack()
+            tk.Radiobutton(self, indicatoron=0, text=f"{order.order_id}", variable=self.var, value=order.order_id, command=self.view_info).pack()
             self.vars.append(self.var)
 
     def view_info(self):
         return str(self.var.get())
-    
