@@ -27,6 +27,16 @@ class TestRemoveClient(test.TestCase):
 
     def test_remove_client_success(self):
         c.client_list = []
+        cm.add_client('Gabe', 'Cruz', 'test@gmail.com', '0487362360')
+        cm.add_client('Chris', 'Daniels', 'test2@gmail.com', '0479365112')
+        cm.remove_client('Gabe', 'Cruz')
+        actual = c.client_list[0].full_info()
+        expected = "Chris Daniels, test2@gmail.com, 0479365112"
+        self.assertEqual(actual, expected)
+
+        with self.assertRaises(Exception):
+            expected2 = "Gabe Cruz, test@gmail.com, 0487362360"
+            self.assertEqual(actual, expected2)
 
 
 

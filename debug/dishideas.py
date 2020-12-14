@@ -25,7 +25,6 @@ class TestAddDishToIdea(test.TestCase):
             it.add_item('TST', 'Testan', 'LOL')
 
 
-
 class TestRemoveDish(test.TestCase):
     def test_remove_dish_success(self):
         it.menu_idea = {'TSA': {'name': 'TestOne', 'price': 1}, 'TSB': {'name': 'TestTwo', 'price': 2}}
