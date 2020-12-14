@@ -30,5 +30,13 @@ class TestRemoveDish(test.TestCase):
         self.assertDictEqual(actual, expected)
 
 
+class TestDictToList(test.TestCase):
+    def test_dict_to_list_success(self):
+        it.menu_idea = {'TSA': {'name': 'TestOne', 'price': 1}, 'TSB': {'name': 'TestTwo', 'price': 2}}
+        actual = it.food_idea_to_list()
+        expected = [('TSA', {'name': 'TestOne', 'price': 1}), ('TSB', {'name': 'TestTwo', 'price': 2})]
+        self.assertListEqual(actual, expected)
+
+
 if __name__ == "__main__":
     test.main()
