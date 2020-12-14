@@ -117,11 +117,11 @@ def get_orders():
 
 def load_orders():
     client_orders = []
-    load_order_file("clientorders.txt")
+    load_order_file("data\clientorders.txt")
 
 
 def save_orders():
-    save_order_file("clientorders.txt")
+    save_order_file("data\clientorders.txt")
 
 
 """ CONSOLE MESSAGES """

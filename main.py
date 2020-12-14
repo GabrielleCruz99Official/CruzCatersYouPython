@@ -1,6 +1,5 @@
 from food import menu as m
-from food import setmenu as sm
-from food import items as it
+from gui import maingui as app
 from debug import exceptions as exc
 from clients import clientmenu as cl
 from clients import clientorders as ord
@@ -39,261 +38,30 @@ def intro_message():
         sys.exit(1)
 
 
-"""GUI"""
+""" GRAPHICAL USER INTERFACE """
 
-
+# settings for the application's main window
 def load_main_gui():
     window = tk.Tk()
     window.title("CRUZCATERSYOU")
     window.geometry("200x150")
-    main = MainMenu(master=window)
+    main = app.MainMenu(master=window)
     window.mainloop()
 
 
-class MainMenu(tk.Frame):
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.master = master
-        self.pack()
-        self.load_database()
-        self.create_widgets()
-
-
-    def create_widgets(self):
-        # main menu label
-        self.title_card = tk.Label(self, text="============\nCRUZCATERSYOU\n============")
-        self.title_card.pack(side="top")
-
-        # menu button
-        self.menu = tk.Button(self, text="Menu")
-        self.menu.bind("<Button>", lambda x: Menu(self.master))
-        # self.menu["command"] = self.load_menu
-        self.menu.pack()
-
-        # clients button
-        self.clients = tk.Button(self, text="Clients")
-        self.clients.bind("<Button>", lambda x: Clients(self.master))
-        # self.clients["command"] = self.load_clients
-        self.clients.pack()
-
-        # orders button
-        self.orders = tk.Button(self, text="Orders")
-        self.orders.bind("<Button>", lambda x: Orders(self.master))
-        # self.orders["command"] = self.load_orders
-        self.orders.pack()
-
-        # quit button
-        self.quit = tk.Button(self, text="QUIT", fg="red", command=self.master.destroy)
-        self.quit.pack(side="bottom")
-
-    def load_database(self):
-        m.load_items()
-        cl.load_client_list()
-        ord.load_orders()
-
-    def load_menu(self):
-        m.display_menu_interface()
-
-    def load_clients(self):
-        cl.display_clients_interface()
-
-    def load_orders(self):
-        ord.display_orders_interface()
-
-
-class Menu(tk.Toplevel):
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.master = master
-        self.title("Menu")
-        self.geometry("500x450")
-        self.create_widgets()
-
-    def create_widgets(self):
-        """TITLE FRAME"""
-        self.title_frame = tk.Frame(self, borderwidth=2, relief='ridge')
-        self.title_frame.pack(side="top")
-        self.menu_label = tk.Label(self.title_frame, text="========\nMENU AND FOOD IDEAS\n========")
-        self.menu_label.pack()
-        self.week_menu = tk.Listbox(self.title_frame, width=0, height=0)
-        self.week_menu.pack()
-        self.display_menu = tk.Button(self.title_frame, text="Display Menu", fg="orange")
-        self.display_menu.bind("<Button>", self.update_menu())
-        self.display_menu.pack()
-
-        """DISHES FRAME"""
-        self.dish_frame = tk.Frame(self, borderwidth=2, relief='ridge')
-        self.dish_frame.pack(side="left")
-        self.dish_label = tk.Label(self.dish_frame, text="-Dish Ideas-")
-        self.dish_label.pack()
-        # display all dish ideas in this listbox
-        self.dish_box = tk.Listbox(self.dish_frame, width=0, height=0)
-        self.dish_box.pack()
-        # press this button to update list of dish ideas
-        self.display_dishes = tk.Button(self.dish_frame, text="Display Dishes", fg="orange")
-        self.display_dishes.bind("<Button>", self.update_dishes())
-        self.display_dishes.pack()
-
-        """FRAME FOR ADD/REMOVE DISHES"""
-        self.change_idea_frame = tk.Frame(self.dish_frame, borderwidth=2, relief='ridge')
-        self.change_idea_frame.pack()
-
-        """FRAME FOR ADDING NEW DISHES"""
-        self.add_dish_frame = tk.Frame(self.change_idea_frame, borderwidth=1, relief='ridge')
-        self.add_dish_frame.pack(side="left")
-        self.add_dish_frame_label = tk.Label(self.add_dish_frame, text="Add new dish?")
-        self.add_dish_frame_label.pack()
-        self.add_id_label = tk.Label(self.add_dish_frame, text="Dish ID")
-        self.add_id_label.pack()
-        self.add_id = tk.Entry(self.add_dish_frame)
-        self.add_id.pack()
-        self.add_name_label = tk.Label(self.add_dish_frame, text="Dish Name")
-        self.add_name_label.pack()
-        self.add_name = tk.Entry(self.add_dish_frame)
-        self.add_name.pack()
-        self.add_price_label = tk.Label(self.add_dish_frame, text="Dish Price")
-        self.add_price_label.pack()
-        self.add_price = tk.Entry(self.add_dish_frame)
-        self.add_price.pack()
-        self.add_new_dish = tk.Button(self.add_dish_frame, text="Confirm")
-        self.add_new_dish.bind("<Button>", self.add_dish)
-        self.add_new_dish.pack()
-
-        """FRAME TO REMOVE EXISTING DISH"""
-        self.remove_dish_frame = tk.Frame(self.change_idea_frame, borderwidth=1, relief='ridge')
-        self.remove_dish_frame.pack(side="left")
-        self.remove_dish_frame_label = tk.Label(self.remove_dish_frame, text="Remove a dish?")
-        self.remove_dish_frame_label.pack()
-        self.remove_id_label = tk.Label(self.remove_dish_frame, text="Dish ID")
-        self.remove_id_label.pack()
-        self.remove_id = tk.Entry(self.remove_dish_frame)
-        self.remove_id.pack()
-        self.remove_new_dish = tk.Button(self.remove_dish_frame, text="Confirm")
-        self.remove_new_dish.bind("<Button>", self.remove_dish)
-        self.remove_new_dish.pack()
-
-        """SET MENU"""
-        self.set_menu_frame = tk.Frame(self, borderwidth=2, relief='ridge')
-        self.set_menu_frame.pack(side="right")
-        self.menu_ideas = tk.Frame(self.set_menu_frame, borderwidth=1, relief='ridge')
-        self.menu_ideas.pack()
-        self.dish_ideas = Checkbar(self.menu_ideas)
-        self.dish_ideas.pack()
-        self.new_menu = tk.Button(self.set_menu_frame, text="Confirm New Menu")
-        self.new_menu.bind("<Button>", self.set_menu)
-        self.new_menu.pack()
-
-
-        """RETURN TO MAIN MENU"""
-        self.menu_back = tk.Button(self, text="Return", fg="red", width=0, height=0)
-        self.menu_back.bind('<Button>', self.go_back)
-        self.menu_back.pack(side="bottom")
-
-    def add_dish(self, event):
-        it.add_item(self.add_id.get(), self.add_name.get(), int(self.add_price.get()))
-        self.update_dishes()
-
-    def remove_dish(self, event):
-        it.remove_item(self.remove_id.get())
-        self.update_dishes()
-
-    def set_menu(self, event):
-        toggle = list(self.dish_ideas.selected())
-        sm.clear_menu()
-        dish_ideas = it.food_idea_to_list()
-        for dish in dish_ideas:
-            index = dish_ideas.index(dish)
-            if toggle[index] == 1:
-                sm.add_menu_dish(dish[1]['name'], dish[1]['price'])
-        self.update_menu()
-
-
-    def update_menu(self):
-        self.week_menu.delete(0, tk.END)
-        wm = sm.weekly_menu_to_list()
-        for menu_dish in wm:
-            self.week_menu.insert(wm.index(menu_dish), f'{menu_dish[0]}: {menu_dish[1]}')
-
-    def update_dishes(self):
-        self.dish_box.delete(0, tk.END)
-        di = it.food_idea_to_list()
-        for dish in di:
-            self.dish_box.insert(di.index(dish), '{}- {}: {}'.format(dish[0], dish[1]['name'], dish[1]['price']))
-
-    def go_back(self, event):
-        m.save_dish()
-        m.save_menu()
-        self.withdraw()
-        print("Back to main menu.")
-
-
-class Checkbar(tk.Frame):
-    def __init__(self, master=None, side="top"):
-        super().__init__(master)
-        self.master = master
-        self.text = tk.Label(self, text="-New Menu-")
-        self.text.pack()
-        self.vars = []
-        self.dishes = it.food_idea_to_list()
-        for dish in self.dishes:
-            var = tk.IntVar()
-            chk = tk.Checkbutton(self, text='{}: {}'.format(dish[1]['name'], dish[1]['price']), variable=var)
-            chk.pack(side=side)
-            self.vars.append(var)
-
-    def selected(self):
-        return map((lambda var: var.get()), self.vars)
-
-
-class Clients(tk.Toplevel):
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.master = master
-        self.title("Orders")
-        self.geometry("450x450")
-        self.create_widgets()
-
-    def create_widgets(self):
-        self.client_label = tk.Label(self, text="=======\nCLIENTS\n=======")
-        self.client_label.pack()
-
-        self.client_back = tk.Button(self, text="Return", fg="red")
-        self.client_back.bind('<Button>', self.go_back)
-        self.client_back.pack()
-
-    def go_back(self, event):
-        print("Back to main menu.")
-        self.withdraw()
-
-
-class Orders(tk.Toplevel):
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.master = master
-        self.title("Menu")
-        self.geometry("450x450")
-        self.create_widgets()
-
-    def create_widgets(self):
-        self.order_label = tk.Label(self, text="======\nOrders\n======")
-        self.order_label.pack()
-
-        self.order_back = tk.Button(self, text="Return", fg="red")
-        self.order_back.bind('<Button>', self.go_back)
-        self.order_back.pack()
-
-    def go_back(self, event):
-        print("Back to main menu.")
-        m.save_menu()
-        m.save_dish()
-        self.withdraw()
+"""
+The application has three subsections (menu, clients, and orders) placed
+in separate windows that are originally hidden whenever the application
+is opened. Whenever you click one of the buttons in the main menu,
+the corresponding window will appear.
+"""
 
 
 if __name__ == "__main__":
     try:
         # load_main_menu()
         load_main_gui()
-    except Exception as e:
-        print(e)
     except exc.IDError as idE:
         print(idE)
+    except Exception as e:
+        print(e)

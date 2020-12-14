@@ -6,11 +6,11 @@ import main
 
 
 def load_client_list():
-    c.load_clients("clientlist.txt")
+    c.load_clients("data\clientlist.txt")
 
 
 def save_client_list():
-    c.save_clients("clientlist.txt")
+    c.save_clients("data\clientlist.txt")
 
 
 def show_clients():

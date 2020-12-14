@@ -19,7 +19,7 @@ def load_dish():
     """
     This function loads the list of food ideas.
     """
-    items.load_dish_file("dishes.txt")
+    items.load_dish_file("data\dishes.txt")
 
 
 def save_dish():
@@ -27,21 +27,21 @@ def save_dish():
     This function is called every time you exit the dishes menu.
     It will save the current list of dish ideas.
     """
-    items.save_dish_file("dishes.txt")
+    items.save_dish_file("data\dishes.txt")
 
 
 def load_menu():
     """
     This function loads the weekly menu.
     """
-    setmenu.load_menu_file("weeklymenu.txt")
+    setmenu.load_menu_file("data\weeklymenu.txt")
 
 
 def save_menu():
     """
     This function saves the weekly menu.
     """
-    setmenu.save_menu_file("weeklymenu.txt")
+    setmenu.save_menu_file("data\weeklymenu.txt")
 
 
 def load_items():
