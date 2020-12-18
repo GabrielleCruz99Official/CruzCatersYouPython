@@ -1,3 +1,6 @@
+from random import randint as rand
+import logging as log
+
 # initialize list of clients
 client_list = []
 
@@ -6,11 +9,12 @@ class Client:
     """
     Initialize the client's contact details here
     """
-    def __init__(self, name="", surname="", email="", contact_number=""):
+    def __init__(self, name="", surname="", email="", contact_number="", client_id=0):
         self._name = name
         self._surname = surname
         self._email = email
         self._contact_number = contact_number
+        self._client_id = client_id
 
     @property
     def name(self):
@@ -44,6 +48,14 @@ class Client:
     def contact_number(self, contact_number):
         self.contact_number = contact_number
 
+    @property
+    def client_id(self):
+        return self._client_id
+
+    @client_id.setter
+    def client_id(self, client_id):
+        self.client_id = client_id
+
     """
     These next few functions will be important because they unify
     class instance values for later unpacking
@@ -56,7 +68,7 @@ class Client:
         return f'{self.email}, {self.contact_number}'
 
     def full_info(self):
-        return f'{self.full_name()}, {self.contact_info()}'
+        return f'{self.full_name()}, {self.contact_info()}, {self.client_id}'
 
     def __str__(self):
         return '{} {}'.format(self.name, self.surname)
@@ -68,7 +80,15 @@ class Client:
 """ CLIENT FUNCTIONS """
 
 
-def get_clients():
+def random_id() -> int:
+    """
+    This is the random id generator for each new order
+    :return: a random integer between 100000 and 999999
+    """
+    return rand(100000, 999999)
+
+
+def get_clients() -> list:
     """
     returns the list of clients in the database
     :return: client_list
@@ -89,35 +109,30 @@ def load_clients(filename: str):
 
     Precondition
     ------------
-    Target file must exist.
+    The file to be loaded must exist.
 
     Postcondition
     -------------
-    The client_list will be filled with values
+    The client list will be filled with values
     loaded from the file.
 
     Raises
     ------
     -FileNotFoundError if file does not exist
-    -ValueError if the line has too many values to unpack
     -IOError if a problem in I/O arises
     """
     try:
         with open(filename, "r") as file:
             for line in file:
-                full_name, email, contact = line.split(", ")
+                full_name, email, contact, client_id = line.split(", ")
                 name, surname = full_name.split(" ")
-                client_list.append(Client(name, surname, email, contact))
+                client_list.append(Client(name, surname, email, contact, int(client_id)))
     except FileNotFoundError as f:
-        print(f)
-    except ValueError as v:
-        print(v)
+        log.error("Client list not found")
     except IOError as io:
-        print(io)
-    except Exception as e:
-        print(e)
+        log.error("File could not be loaded")
     else:
-        print("File loaded.")
+        log.info("Client list loaded.")
 
 
 def save_clients(filename: str):
@@ -129,11 +144,13 @@ def save_clients(filename: str):
 
     Precondition
     ------------
-    Target file must exist. If not, the program will create one.
+    Target file must exist.
 
     Postcondition
     -------------
-    The file will contain the list of clients
+    The file will contain the list of clients. If the file didn't
+    exist before, the program will create one and input the data
+    in that file.
 
     Raises
     ------
@@ -142,17 +159,16 @@ def save_clients(filename: str):
     """
     try:
         with open(filename, "w") as file:
-            for client in client_list:
-                temp_str = f'{client.full_info()}'
+            for cl in client_list:
+                temp_str = f'{cl.full_info()}'
                 file.writelines(f'{temp_str.rstrip()}\n')
     except IOError as io:
-        print(io)
-    except Exception as e:
-        print(e)
+        log.error("Cannot save file!")
     else:
-        print("List saved to database.")
+        log.info("Clients saved to database.")
 
 
 if __name__ == "__main__":
-    load_clients("clientlist.txt")
-    print(client_list)
+    load_clients(".\..\data\clientlist.txt")
+    for client in client_list:
+        print(client.client_id)

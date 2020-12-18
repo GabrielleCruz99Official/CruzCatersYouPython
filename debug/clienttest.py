@@ -1,5 +1,6 @@
 from clients import clientmenu as cm
 from clients import client as c
+from debug import exceptions as e
 import unittest as test
 
 
@@ -15,9 +16,9 @@ class TestAddClient(test.TestCase):
         expected = 'Gabe Cruz, test@gmail.com, 0487362360'
         self.assertEqual(actual, expected)
 
-        with self.assertRaises(Exception):
-            expected2 = 'Test One, test.com, 0004'
-            self.assertEqual(actual, expected2)
+    def test_empty_values(self):
+        with self.assertRaises(TypeError):
+            cm.add_client('Test One', 'test.com', 4)
 
 
 class TestRemoveClient(test.TestCase):
@@ -37,7 +38,6 @@ class TestRemoveClient(test.TestCase):
         with self.assertRaises(Exception):
             expected2 = "Gabe Cruz, test@gmail.com, 0487362360"
             self.assertEqual(actual, expected2)
-
 
 
 if __name__ == "__main__":

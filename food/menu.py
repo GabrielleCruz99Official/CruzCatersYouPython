@@ -107,13 +107,11 @@ def display_dishes():
                 "To add a dish, please use this format:\nDDD(for dish_id), name, price\n=> ").split(", ")
             print(dish_id, dish_name, dish_price)
             items.add_item(dish_id, dish_name, dish_price)
-            print("Dish added to list!")
             save_dish()
             display_dishes()
         elif action == "2":
             dish_id = input("Please input the 3-letter code of the dish you wish to remove: ")
             items.remove_item(dish_id)
-            print("Dish removed!")
             save_dish()
             display_dishes()
         else:

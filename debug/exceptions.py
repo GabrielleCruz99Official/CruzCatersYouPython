@@ -6,3 +6,11 @@ class IDError(Exception):
 
     def __str__(self):
         return f'{self.dish_id} -> {self.message}'
+
+
+class EmptyValue(Exception):
+    pass
+
+
+class NotInDatabase(Exception):
+    pass

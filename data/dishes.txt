@@ -5,3 +5,4 @@ CHS, Creamy Cheesecake, 15
 MLK, Milkfish, 18
 SBL, Spaghetti Bolognaise, 12
 PLB, Palabok, 15
+VAV, Vol au Vent, 12

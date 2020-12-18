@@ -1,3 +1,6 @@
+import logging as log
+
+
 # week menu: name, price
 week_menu = {}
 
@@ -11,9 +14,7 @@ def load_menu_file(filename: str):
 
     Precondition
     ------------
-    The target file exists and contains values. If the file
-    is empty or doesn't exist, the program will create one,
-    but there will be no values loaded to the application.
+    The target file exists and contains values.
 
     Postcondition
     -------------
@@ -24,9 +25,13 @@ def load_menu_file(filename: str):
         with open(filename, "r") as file:
             for line in file:
                 name, price = line.rstrip().split(", ")
-                add_menu_dish(name, price)
-    except Exception as e:
-        print(e)
+                add_menu_dish(name, int(price))
+    except FileNotFoundError:
+        log.error("Menu file not found!")
+    except IOError:
+        log.error("Error loading file.")
+    else:
+        log.info("Menu file loaded.")
 
 
 def save_menu_file(filename: str):
@@ -38,20 +43,26 @@ def save_menu_file(filename: str):
 
     Precondition
     ------------
-    The target file exists. If not, the program will create one.
+    The target file exists.
 
     Postcondition
     -------------
     The target file will contain the weekly menu
-    created by the user.
+    created by the user. If the target file did not
+    exist before, the program will create one and
+    save the weekly menu in it.
     """
     try:
         with open(filename, "w") as file:
             for dish in week_menu:
                 name, price = dish, week_menu[dish]
-                file.writelines(f"{name}, {price}")
-    except Exception as e:
-        print(e)
+                file.writelines(f"{name}, {price}\n")
+    except FileNotFoundError:
+        log.warning("File not found. The program will create with the inputted name.")
+    except IOError:
+        log.error("File cannot be saved!")
+    else:
+        log.info("Menu of the week saved.")
 
 
 def add_menu_dish(name: str, price: int):
@@ -75,8 +86,14 @@ def add_menu_dish(name: str, price: int):
     - The dish is added to the weekly menu
 
     """
-    if name not in week_menu:
-        week_menu[name] = price
+    try:
+        if type(price) != int:
+            raise TypeError
+        week_menu[name] = price if name not in week_menu else print("Already added!")
+    except TypeError:
+        log.error("You didn't put a number for the price.")
+    else:
+        log.info("Dish added to menu!")
 
 
 def clear_menu():
@@ -86,7 +103,7 @@ def clear_menu():
     week_menu.clear()
 
 
-def weekly_menu_to_list():
+def weekly_menu_to_list() -> list:
     """
     This function converts the dictionary
     into a list to be viewed by the interface

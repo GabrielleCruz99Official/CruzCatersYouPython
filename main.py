@@ -3,8 +3,20 @@ from debug import exceptions as exc
 from food import menu as m
 from clients import clientmenu as cl
 from clients import clientorders as o
+import logging as log
 import tkinter as tk
 import sys
+
+
+""" LOGGING """
+
+
+def load_log():
+    log.basicConfig(filename="debug\logs.log", filemode="w", encoding="utf-8", level=log.DEBUG)
+    log.debug("Testing here")
+    log.info("This is normal.")
+    log.warning("Please take a look here.")
+    log.error("STOP! Change this immediately!")
 
 
 """CONSOLE MESSAGES"""
@@ -60,8 +72,9 @@ the corresponding window will appear.
 
 if __name__ == "__main__":
     try:
-        # load_main_menu()
-        load_main_gui()
+        load_log()
+        load_main_menu()
+        # load_main_gui()
     except exc.IDError as idE:
         print(idE)
     except Exception as e:

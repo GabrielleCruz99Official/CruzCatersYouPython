@@ -25,27 +25,28 @@
       <x>460</x>
       <y>530</y>
       <w>120</w>
-      <h>120</h>
+      <h>100</h>
     </coordinates>
     <panel_attributes>ClientOrder
 --
 -order_list: list
 -total_price: int
--status: String
---
-+get_order()
-+get_status()</panel_attributes>
+-order_id: int
+--</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>850</x>
-      <y>360</y>
+      <y>310</y>
       <w>120</w>
-      <h>30</h>
+      <h>70</h>
     </coordinates>
-    <panel_attributes>Food Dishes</panel_attributes>
+    <panel_attributes>Food Dishes
+--
+
+--</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -54,9 +55,13 @@
       <x>860</x>
       <y>550</y>
       <w>100</w>
-      <h>40</h>
+      <h>70</h>
     </coordinates>
     <panel_attributes>Weekly Menu
+--
+
+--
+
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -64,15 +69,15 @@
     <id>Relation</id>
     <coordinates>
       <x>900</x>
-      <y>380</y>
+      <y>370</y>
       <w>90</w>
-      <h>190</h>
+      <h>200</h>
     </coordinates>
     <panel_attributes>consists of
 lt=&lt;&lt;&lt;&lt;-
-m1=n
+m1=1...n
 m2=1...n</panel_attributes>
-    <additional_attributes>10.0;170.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;180.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>

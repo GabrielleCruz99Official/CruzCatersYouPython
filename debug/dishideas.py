@@ -19,10 +19,10 @@ class TestAddDishToIdea(test.TestCase):
     def test_bad_id(self):
         with self.assertRaises(exc.IDError):
             it.add_item('TSTAN', 'Testan', 10)
-    
+
     def test_int_for_price(self):
         with self.assertRaises(TypeError):
-            it.add_item('TST', 'Testan', 'LOL')
+            it.add_item('TST', 'Test', 'LOL')
 
 
 class TestRemoveDish(test.TestCase):
@@ -34,6 +34,7 @@ class TestRemoveDish(test.TestCase):
         self.assertDictEqual(actual, expected)
 
     def test_bad_id(self):
+        it.menu_idea = {'TSA': {'name': 'TestOne', 'price': 1}, 'TSB': {'name': 'TestTwo', 'price': 2}}
         with self.assertRaises(exc.IDError):
             it.remove_item('TSTAN')
 

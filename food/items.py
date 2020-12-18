@@ -1,5 +1,5 @@
 from debug import exceptions as exc
-
+import logging as log
 # set up empty dictionary
 menu_idea = {}
 
@@ -13,9 +13,7 @@ def load_dish_file(filename: str):
 
     Precondition
     ------------
-    The target file exists and contains values. If the file
-    is empty or doesn't exist, the program will create one,
-    but there will be no values loaded to the application.
+    The target file exists and contains values.
 
     Postcondition
     -------------
@@ -27,9 +25,13 @@ def load_dish_file(filename: str):
         with open(filename, "r") as file:
             for line in file:
                 temp_id, temp_name, temp_price = line.split(", ")
-                add_item(temp_id, temp_name, temp_price)
-    except Exception as e:
-        print(e)
+                add_item(temp_id, temp_name, int(temp_price))
+    except FileNotFoundError:
+        log.error("Dishes file not found!")
+    except IOError:
+        log.error("Unable to load file.")
+    else:
+        log.info("Dishes file loaded.")
 
 
 def save_dish_file(filename: str):
@@ -42,12 +44,14 @@ def save_dish_file(filename: str):
 
     Precondition
     ------------
-    The target file exists. If not, the program will create one.
+    The target file exists.
 
     Postcondition
     -------------
     The target file will contain the various dishes
-    the user has inputted or updated.
+    the user has inputted or updated. If the file didn't exist,
+    the program will create a file with the inputted name and
+    input the dish ideas into it.
     """
     try:
         with open(filename, "w") as file:
@@ -55,9 +59,13 @@ def save_dish_file(filename: str):
             for dish in temp_dish:
                 temp_id, temp_info = dish
                 temp_name, temp_price = temp_info.values()
-                file.writelines(f"{temp_id}, {temp_name}, {temp_price}")
-    except Exception as e:
-        print(e)
+                file.writelines(f"{temp_id}, {temp_name}, {temp_price}\n")
+    except FileNotFoundError:
+        log.error("Dishes file not found! The program will create a file.")
+    except IOError:
+        log.error("Unable to save data.")
+    else:
+        log.info("Dishes saved to database.")
 
 
 def add_item(dish_id: str, dish_name: str, dish_price: int):
@@ -79,6 +87,7 @@ def add_item(dish_id: str, dish_name: str, dish_price: int):
     - The length of item_id must be exactly 3
     - The price number must be an integer
     - The inputted value of dish_id must not already exist
+    - All the values must be filled
 
     Postcondition
     -------------
@@ -87,12 +96,19 @@ def add_item(dish_id: str, dish_name: str, dish_price: int):
     Raises
     ------
     - ID Error: if the dish ID does not have exactly 3 letters
+    - TypeError: if the price inputted is not an integer
     """
-    if len(dish_id) == 3:
+    try:
         if dish_id not in menu_idea:
             menu_idea[dish_id] = {"name": dish_name, "price": dish_price}
+        else:
+            log.warning("Dish already exists!")
+    except exc.IDError:
+        log.error("You need to input only 3 letters for the ID")
+    except TypeError:
+        log.error("The price you inputted is not a number!")
     else:
-        raise exc.IDError
+        log.info("Dish added!")
 
 
 def remove_item(dish_id: str):
@@ -111,15 +127,19 @@ def remove_item(dish_id: str):
 
     Raises:
     - ID Error: if the dish ID does not have exactly 3 letters
+    - KeyError: if the key doesn't exist in the database
     """
-    if len(dish_id) == 3:
-        if dish_id in menu_idea:
-            del (menu_idea[dish_id])
+    try:
+        del (menu_idea[dish_id])
+    except exc.IDError:
+        log.error("You need to input only 3 letters for the ID")
+    except KeyError:
+        log.error("Dish doesn't exist in the database")
     else:
-        raise exc.IDError
+        log.info("Dish removed!")
 
 
-def food_idea_to_list():
+def food_idea_to_list() -> list:
     """
     This function converts the dictionary
     into a list to be viewed by the interface
