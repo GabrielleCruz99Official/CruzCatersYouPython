@@ -21,16 +21,10 @@ def load_dish_file(filename: str):
     potential dishes for a weekly menu.
 
     """
-    try:
-        with open(filename, "r") as file:
-            for line in file:
-                temp_id, temp_name, temp_price = line.split(", ")
-                add_item(temp_id, temp_name, int(temp_price))
-    except FileNotFoundError:
-        log.error("Dishes file not found!")
-    except IOError:
-        log.error("Unable to load file.")
-    else:
+    with open(filename, "r") as file:
+        for line in file:
+            temp_id, temp_name, temp_price = line.split(", ")
+            add_item(temp_id, temp_name, int(temp_price))
         log.info("Dishes file loaded.")
 
 
@@ -53,18 +47,13 @@ def save_dish_file(filename: str):
     the program will create a file with the inputted name and
     input the dish ideas into it.
     """
-    try:
-        with open(filename, "w") as file:
-            temp_dish = food_idea_to_list()
-            for dish in temp_dish:
-                temp_id, temp_info = dish
-                temp_name, temp_price = temp_info.values()
-                file.writelines(f"{temp_id}, {temp_name}, {temp_price}\n")
-    except FileNotFoundError:
-        log.error("Dishes file not found! The program will create a file.")
-    except IOError:
-        log.error("Unable to save data.")
-    else:
+
+    with open(filename, "w") as file:
+        temp_dish = food_idea_to_list()
+        for dish in temp_dish:
+            temp_id, temp_info = dish
+            temp_name, temp_price = temp_info.values()
+            file.writelines(f"{temp_id}, {temp_name}, {temp_price}\n")
         log.info("Dishes saved to database.")
 
 
@@ -98,17 +87,14 @@ def add_item(dish_id: str, dish_name: str, dish_price: int):
     - ID Error: if the dish ID does not have exactly 3 letters
     - TypeError: if the price inputted is not an integer
     """
-    try:
-        if dish_id not in menu_idea:
-            menu_idea[dish_id] = {"name": dish_name, "price": dish_price}
-        else:
-            log.warning("Dish already exists!")
-    except exc.IDError:
-        log.error("You need to input only 3 letters for the ID")
-    except TypeError:
-        log.error("The price you inputted is not a number!")
-    else:
-        log.info("Dish added!")
+    if len(dish_id) != 3:
+        raise exc.IDError
+    if not type(dish_price) == int:
+        raise TypeError
+    if dish_id in menu_idea:
+        raise KeyError
+    menu_idea[dish_id] = {"name": dish_name, "price": dish_price}
+    log.info("Dish added!")
 
 
 def remove_item(dish_id: str):
@@ -129,14 +115,12 @@ def remove_item(dish_id: str):
     - ID Error: if the dish ID does not have exactly 3 letters
     - KeyError: if the key doesn't exist in the database
     """
-    try:
-        del (menu_idea[dish_id])
-    except exc.IDError:
-        log.error("You need to input only 3 letters for the ID")
-    except KeyError:
-        log.error("Dish doesn't exist in the database")
-    else:
-        log.info("Dish removed!")
+    if len(dish_id) != 3:
+        raise exc.IDError
+    if dish_id not in menu_idea:
+        raise KeyError
+    del (menu_idea[dish_id])
+    log.info("Dish removed!")
 
 
 def food_idea_to_list() -> list:

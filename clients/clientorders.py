@@ -44,7 +44,7 @@ class ClientOrder:
         self.order_id = order_id
 
     def relevant_info(self):
-        return f'{self.client.client_id()}, {self.order_list}, {self.subtotal}, {self.order_id}'
+        return f'{self.client.client_id}, {self.order_list}, {self.subtotal}, {self.order_id}'
 
 
 """ ORDER FUNCTIONS """
@@ -191,6 +191,7 @@ def display_orders_interface():
     """
     Displays the orders section
     """
+    clear_orders()
     cm.load_client_list()
     load_orders()
     print("======\nORDERS\n======")

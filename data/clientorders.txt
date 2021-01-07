@@ -1,2 +1,2 @@
-101564, [('Beef Kare-Kare', '12', '1'), ('Chicken Pasta Salad', '6', '2')], 24, 976885
-967470, [('Beef Kare-Kare', '12', '2'), ('Chicken Pasta Salad', '6', '2')], 36, 219717
+101564, [('Beef Kare-Kare', '12', '1'), ('Chicken Pasta Salad', '6', '2')], '24', '976885'
+967470, [('Beef Kare-Kare', '12', '2'), ('Chicken Pasta Salad', '6', '2')], '36', '219717'

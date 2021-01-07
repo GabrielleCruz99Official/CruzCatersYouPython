@@ -8,6 +8,10 @@ class IDError(Exception):
         return f'{self.dish_id} -> {self.message}'
 
 
+class AlreadyExists(Exception):
+    pass
+
+
 class EmptyValue(Exception):
     pass
 

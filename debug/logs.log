@@ -4,9 +4,7 @@ WARNING:root:Please take a look here.
 ERROR:root:STOP! Change this immediately!
 INFO:root:Client list loaded.
 INFO:root:Order list loaded.
-INFO:root:Dish added to menu!
-INFO:root:Dish added to menu!
-INFO:root:Dish added to menu!
-INFO:root:Menu file loaded.
+INFO:root:Orders saved to database
 INFO:root:Client list loaded.
 INFO:root:Order list loaded.
+INFO:root:Orders saved to database
