@@ -10,6 +10,16 @@ class TestAddDishToMenu(test.TestCase):
         expected = {'Beef Kare-Kare': 12}
         self.assertDictEqual(actual, expected)
 
+    def test_item_already_in_menu(self):
+        sm.week_menu = {'Me': 10, 'You': 12}
+        self.assertRaises(KeyError, sm.add_menu_dish, 'Me', 15)
+        self.assertRaises(KeyError, sm.add_menu_dish, 'You', 5)
+
+    def test_wrong_price_input(self):
+        sm.week_menu = {'Me': 10, 'You': 12}
+        self.assertRaises(TypeError, sm.add_menu_dish, 'Him', "lolz")
+        self.assertRaises(TypeError, sm.add_menu_dish, 'Him', "-0po")
+
 
 class TestClearMenu(test.TestCase):
     def test_clear_menu_success(self):

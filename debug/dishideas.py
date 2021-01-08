@@ -4,7 +4,7 @@ from food import items as it
 
 """
 Here, we will find the application quality control tests
-in case we encounter bugs
+for the dish ideas module in case we encounter bugs
 """
 
 
@@ -12,9 +12,14 @@ class TestAddDishToIdea(test.TestCase):
     def test_add_dish_success(self):
         it.menu_idea = {}
         it.add_item('TST', 'Test', 10)
+        it.add_item('P-O', 'post', 11)
         actual = it.menu_idea
-        expected = {'TST': {'name': 'Test', 'price': 10}}
+        expected = {'TST': {'name': 'Test', 'price': 10}, 'P-O': {'name': 'post', 'price': 11}}
         self.assertDictEqual(actual, expected)
+
+    def test_dish_already_in_list(self):
+        it.menu_idea = {'MMM': {'name': 'Me', 'price': 10}, 'YYY': {'name': 'You', 'price': 12}}
+        self.assertRaises(KeyError, it.add_item, 'YYY', 'Yes', 12)
 
     def test_bad_id(self):
         with self.assertRaises(exc.IDError):
@@ -32,6 +37,10 @@ class TestRemoveDish(test.TestCase):
         actual = it.menu_idea
         expected = {'TSA': {'name': 'TestOne', 'price': 1}}
         self.assertDictEqual(actual, expected)
+
+    def test_dish_not_in_ideas(self):
+        it.menu_idea = {'TSA': {'name': 'TestOne', 'price': 1}, 'TSB': {'name': 'TestTwo', 'price': 2}}
+        self.assertRaises(KeyError, it.remove_item, 'TSC')
 
     def test_bad_id(self):
         it.menu_idea = {'TSA': {'name': 'TestOne', 'price': 1}, 'TSB': {'name': 'TestTwo', 'price': 2}}
