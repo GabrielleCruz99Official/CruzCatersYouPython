@@ -121,17 +121,11 @@ def load_clients(filename: str):
     -FileNotFoundError if file does not exist
     -IOError if a problem in I/O arises
     """
-    try:
-        with open(filename, "r") as file:
-            for line in file:
-                full_name, email, contact, client_id = line.split(", ")
-                name, surname = full_name.split(" ")
-                client_list.append(Client(name, surname, email, contact, int(client_id)))
-    except FileNotFoundError as f:
-        log.error("Client list not found")
-    except IOError as io:
-        log.error("File could not be loaded")
-    else:
+    with open(filename, "r") as file:
+        for line in file:
+            full_name, email, contact, client_id = line.split(", ")
+            name, surname = full_name.split(" ")
+            client_list.append(Client(name, surname, email, contact, int(client_id)))
         log.info("Client list loaded.")
 
 
@@ -157,14 +151,10 @@ def save_clients(filename: str):
     IOError if there is a problem in I/O
 
     """
-    try:
-        with open(filename, "w") as file:
-            for cl in client_list:
-                temp_str = f'{cl.full_info()}'
-                file.writelines(f'{temp_str.rstrip()}\n')
-    except IOError as io:
-        log.error("Cannot save file!")
-    else:
+    with open(filename, "w") as file:
+        for cl in client_list:
+            temp_str = f'{cl.full_info()}'
+            file.writelines(f'{temp_str.rstrip()}\n')
         log.info("Clients saved to database.")
 
 

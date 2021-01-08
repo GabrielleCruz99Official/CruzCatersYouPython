@@ -21,16 +21,10 @@ def load_menu_file(filename: str):
     The week_menu dictionary will be filled with the dishes
     picked out for the week.
     """
-    try:
-        with open(filename, "r") as file:
-            for line in file:
-                name, price = line.rstrip().split(", ")
-                add_menu_dish(name, int(price))
-    except FileNotFoundError:
-        log.error("Menu file not found!")
-    except IOError:
-        log.error("Error loading file.")
-    else:
+    with open(filename, "r") as file:
+        for line in file:
+            name, price = line.rstrip().split(", ")
+            add_menu_dish(name, int(price))
         log.info("Menu file loaded.")
 
 
@@ -52,16 +46,10 @@ def save_menu_file(filename: str):
     exist before, the program will create one and
     save the weekly menu in it.
     """
-    try:
-        with open(filename, "w") as file:
-            for dish in week_menu:
-                name, price = dish, week_menu[dish]
-                file.writelines(f"{name}, {price}\n")
-    except FileNotFoundError:
-        log.warning("File not found. The program will create with the inputted name.")
-    except IOError:
-        log.error("File cannot be saved!")
-    else:
+    with open(filename, "w") as file:
+        for dish in week_menu:
+            name, price = dish, week_menu[dish]
+            file.writelines(f"{name}, {price}\n")
         log.info("Menu of the week saved.")
 
 
@@ -86,14 +74,12 @@ def add_menu_dish(name: str, price: int):
     - The dish is added to the weekly menu
 
     """
-    try:
-        if type(price) != int:
-            raise TypeError
-        week_menu[name] = price if name not in week_menu else print("Already added!")
-    except TypeError:
-        log.error("You didn't put a number for the price.")
-    else:
-        log.info("Dish added to menu!")
+    if type(price) != int:
+        raise TypeError
+    if name in week_menu:
+        raise KeyError
+    week_menu[name] = price
+    log.info("Dish added to menu!")
 
 
 def clear_menu():

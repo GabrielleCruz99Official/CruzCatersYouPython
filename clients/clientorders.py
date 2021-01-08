@@ -103,23 +103,17 @@ def load_order_file(filename: str):
     - If the file cannot be found, an exception will be raised
     - If the file cannot be loaded, an IOError will be raised
     """
-    try:
-        with open(filename, "r") as file:
-            for line in file:
-                order_start = line.find("[")
-                order_end = line.find("]") + 1
-                order_list = line[order_start:order_end]
-                # added 2 to the index of order_end to skip
-                # whitespace and comma
-                rest = line[:order_start] + line[order_end+2:]
-                client_id, subtotal, order_id = rest.rstrip().split(", ")
-                client_info = check_client(int(client_id))
-                add_order(client_info, order_list, subtotal, order_id)
-    except FileNotFoundError:
-        log.error("File cannot be found.")
-    except IOError:
-        log.error("Orders cannot be loaded.")
-    else:
+    with open(filename, "r") as file:
+        for line in file:
+            order_start = line.find("[")
+            order_end = line.find("]") + 1
+            order_list = line[order_start:order_end]
+            # added 2 to the index of order_end to skip
+            # whitespace and comma
+            rest = line[:order_start] + line[order_end + 2:]
+            client_id, subtotal, order_id = rest.rstrip().split(", ")
+            client_info = check_client(int(client_id))
+            add_order(client_info, order_list, subtotal, order_id)
         log.info("Order list loaded.")
 
 
@@ -139,14 +133,10 @@ def save_order_file(filename: str):
     create one.
     If the list cannot be saved, an error will be raised.
     """
-    try:
-        with open(filename, "w") as file:
-            for order in client_orders:
-                temp_str = f'{order.relevant_info()}\n'
-                file.writelines(temp_str)
-    except IOError:
-        log.error("Orders cannot be saved")
-    else:
+    with open(filename, "w") as file:
+        for order in client_orders:
+            temp_str = f'{order.relevant_info()}\n'
+            file.writelines(temp_str)
         log.info("Orders saved to database")
 
 

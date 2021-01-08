@@ -1,6 +1,6 @@
 from clients import client as c
 from re import search
-from debug import exceptions as e
+from debug import exceptions as exc
 import main
 import logging as log
 
@@ -43,22 +43,16 @@ def add_client(name: str, surname: str, email: str, contact: str):
     -------------
     - The client should now be added to the database
     - The client is ensured to have a unique ID
-    - If any of the input values are missing, the function will raise
-      an EmptyValue error
     """
-    try:
-        random_id = 0
-        unique_id = False
-        # this ensures the program will give a unique id to a client
-        while not unique_id:
-            random_id = c.random_id()
-            if len([x for x in c.client_list if x.client_id == random_id]) == 0:
-                unique_id = True
-        c.client_list.append(c.Client(name, surname, email, contact, random_id))
-    except e.EmptyValue:
-        log.error("Incomplete values.")
-    else:
-        log.info("Client added.")
+    random_id = 0
+    unique_id = False
+    # this ensures the program will give a unique id to a client
+    while not unique_id:
+        random_id = c.random_id()
+        if len([x for x in c.client_list if x.client_id == random_id]) == 0:
+            unique_id = True
+    c.client_list.append(c.Client(name, surname, email, contact, random_id))
+    log.info("Client added.")
 
 
 def remove_client(client_id: int):
@@ -75,14 +69,13 @@ def remove_client(client_id: int):
     - The client should now be removed from the database
     - If the client ID is not an integer, the program will stop
     """
-    try:
-        c.client_list = [x for x in c.client_list if x.client_id != int(client_id)]
-    except TypeError:
-        log.error("That's not a valid ID.")
-    except e.NotInDatabase:
-        log.warning("You're trying to remove a client that doesn't exist.")
-    else:
-        log.info("Client removed.")
+    if not type(client_id) == int:
+        raise TypeError
+    find_id = [x for x in c.client_list if x.client_id == int(client_id)]
+    if not find_id:
+        raise exc.NotInDatabase
+    c.client_list = [x for x in c.client_list if x.client_id != int(client_id)]
+    log.info("Client removed.")
 
 
 """ CONSOLE MESSAGES """

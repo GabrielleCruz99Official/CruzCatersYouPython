@@ -76,12 +76,14 @@ if __name__ == "__main__":
         load_main_menu()
         # load_main_gui()
     except FileNotFoundError:
-        log.error("Dishes file not found!")
+        log.error("File not found!")
     except IOError:
-        log.error("Unable to load file.")
+        log.error("File error.")
     except exc.IDError:
         log.error("You need to input only 3 letters for the ID")
     except TypeError:
-        log.error("The price you inputted is not a number!")
+        log.error("Not a number!")
+    except exc.NotInDatabase:
+        log.error("Not in database!")
     else:
         log.info("Application successfully run.")
